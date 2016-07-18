@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/label.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="data/json_AggressiveDriving0.js"></script>
+        <script src="data/json_ImpairedDriver1.js"></script>
+        <script src="data/json_RunningRedOrStop2.js"></script>
+        <script src="data/json_SchoolZone3.js"></script>
+        <script src="data/json_Speeding4.js"></script>
+        <script src="data/json_CouncilDistricts5.js"></script>
+        <script src="data/json_ALLPEDCRASH6.js"></script>
+        <script src="data/json_PedMajorInjury7.js"></script>
+        <script src="data/json_PedDeaths8.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        layerControl = L.control.layers({},{},{collapsed:false});
+        function pop_AggressiveDriving0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleAggressiveDriving0() {
+            return {
+                radius: 2.0,
+                fillColor: '#dd95cf',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerAggressiveDriving0(feature, latlng) {
+            return L.circleMarker(latlng, doStyleAggressiveDriving0())
+        }
+        var json_AggressiveDriving0JSON = new L.geoJson(json_AggressiveDriving0, {
+            onEachFeature: pop_AggressiveDriving0, 
+            pointToLayer: doPointToLayerAggressiveDriving0
+            });
+        layerOrder[layerOrder.length] = json_AggressiveDriving0JSON;
+
+        bounds_group.addLayer(json_AggressiveDriving0JSON);
+        initialOrder[initialOrder.length] = json_AggressiveDriving0JSON;
+        feature_group.addLayer(json_AggressiveDriving0JSON);
+        function pop_ImpairedDriver1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleImpairedDriver1() {
+            return {
+                radius: 2.0,
+                fillColor: '#378e77',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerImpairedDriver1(feature, latlng) {
+            return L.circleMarker(latlng, doStyleImpairedDriver1())
+        }
+        var json_ImpairedDriver1JSON = new L.geoJson(json_ImpairedDriver1, {
+            onEachFeature: pop_ImpairedDriver1, 
+            pointToLayer: doPointToLayerImpairedDriver1
+            });
+        layerOrder[layerOrder.length] = json_ImpairedDriver1JSON;
+
+        bounds_group.addLayer(json_ImpairedDriver1JSON);
+        initialOrder[initialOrder.length] = json_ImpairedDriver1JSON;
+        feature_group.addLayer(json_ImpairedDriver1JSON);
+        function pop_RunningRedOrStop2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleRunningRedOrStop2() {
+            return {
+                radius: 2.0,
+                fillColor: '#c558a8',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerRunningRedOrStop2(feature, latlng) {
+            return L.circleMarker(latlng, doStyleRunningRedOrStop2())
+        }
+        var json_RunningRedOrStop2JSON = new L.geoJson(json_RunningRedOrStop2, {
+            onEachFeature: pop_RunningRedOrStop2, 
+            pointToLayer: doPointToLayerRunningRedOrStop2
+            });
+        layerOrder[layerOrder.length] = json_RunningRedOrStop2JSON;
+
+        bounds_group.addLayer(json_RunningRedOrStop2JSON);
+        initialOrder[initialOrder.length] = json_RunningRedOrStop2JSON;
+        feature_group.addLayer(json_RunningRedOrStop2JSON);
+        function pop_SchoolZone3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleSchoolZone3() {
+            return {
+                radius: 2.0,
+                fillColor: '#4f51c5',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerSchoolZone3(feature, latlng) {
+            return L.circleMarker(latlng, doStyleSchoolZone3())
+        }
+        var json_SchoolZone3JSON = new L.geoJson(json_SchoolZone3, {
+            onEachFeature: pop_SchoolZone3, 
+            pointToLayer: doPointToLayerSchoolZone3
+            });
+        layerOrder[layerOrder.length] = json_SchoolZone3JSON;
+
+        bounds_group.addLayer(json_SchoolZone3JSON);
+        initialOrder[initialOrder.length] = json_SchoolZone3JSON;
+        feature_group.addLayer(json_SchoolZone3JSON);
+        function pop_Speeding4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleSpeeding4() {
+            return {
+                radius: 2.0,
+                fillColor: '#3308b3',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerSpeeding4(feature, latlng) {
+            return L.circleMarker(latlng, doStyleSpeeding4())
+        }
+        var json_Speeding4JSON = new L.geoJson(json_Speeding4, {
+            onEachFeature: pop_Speeding4, 
+            pointToLayer: doPointToLayerSpeeding4
+            });
+        layerOrder[layerOrder.length] = json_Speeding4JSON;
+
+        bounds_group.addLayer(json_Speeding4JSON);
+        initialOrder[initialOrder.length] = json_Speeding4JSON;
+        feature_group.addLayer(json_Speeding4JSON);
+        function pop_CouncilDistricts5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleCouncilDistricts5(feature) {
+            return {
+                weight: 3.2,
+                color: '#000000',
+                fillColor: '#000000',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 0.0
+            };
+        }
+        var json_CouncilDistricts5JSON = new L.geoJson(json_CouncilDistricts5, {
+            onEachFeature: pop_CouncilDistricts5,
+            style: doStyleCouncilDistricts5
+        });
+        layerOrder[layerOrder.length] = json_CouncilDistricts5JSON;
+        bounds_group.addLayer(json_CouncilDistricts5JSON);
+        initialOrder[initialOrder.length] = json_CouncilDistricts5JSON;
+        feature_group.addLayer(json_CouncilDistricts5JSON);
+        function pop_ALLPEDCRASH6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleALLPEDCRASH6() {
+            return {
+                radius: 2.0,
+                fillColor: '#b5b197',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerALLPEDCRASH6(feature, latlng) {
+            return L.circleMarker(latlng, doStyleALLPEDCRASH6())
+        }
+        var json_ALLPEDCRASH6JSON = new L.geoJson(json_ALLPEDCRASH6, {
+            onEachFeature: pop_ALLPEDCRASH6, 
+            pointToLayer: doPointToLayerALLPEDCRASH6
+            });
+        layerOrder[layerOrder.length] = json_ALLPEDCRASH6JSON;
+
+        bounds_group.addLayer(json_ALLPEDCRASH6JSON);
+        initialOrder[initialOrder.length] = json_ALLPEDCRASH6JSON;
+        feature_group.addLayer(json_ALLPEDCRASH6JSON);
+        function pop_PedMajorInjury7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStylePedMajorInjury7() {
+            return {
+                radius: 2.0,
+                fillColor: '#db9e36',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerPedMajorInjury7(feature, latlng) {
+            return L.circleMarker(latlng, doStylePedMajorInjury7())
+        }
+        var json_PedMajorInjury7JSON = new L.geoJson(json_PedMajorInjury7, {
+            onEachFeature: pop_PedMajorInjury7, 
+            pointToLayer: doPointToLayerPedMajorInjury7
+            });
+        layerOrder[layerOrder.length] = json_PedMajorInjury7JSON;
+
+        bounds_group.addLayer(json_PedMajorInjury7JSON);
+        initialOrder[initialOrder.length] = json_PedMajorInjury7JSON;
+        feature_group.addLayer(json_PedMajorInjury7JSON);
+        function pop_PedDeaths8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStylePedDeaths8() {
+            return {
+                radius: 3.5,
+                fillColor: '#000000',
+                color: '#bd4932',
+                weight: 3.2,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 0.0
+            }
+        }
+        function doPointToLayerPedDeaths8(feature, latlng) {
+            return L.circleMarker(latlng, doStylePedDeaths8())
+        }
+        var json_PedDeaths8JSON = new L.geoJson(json_PedDeaths8, {
+            onEachFeature: pop_PedDeaths8, 
+            pointToLayer: doPointToLayerPedDeaths8
+            });
+        layerOrder[layerOrder.length] = json_PedDeaths8JSON;
+
+        bounds_group.addLayer(json_PedDeaths8JSON);
+        initialOrder[initialOrder.length] = json_PedDeaths8JSON;
+        feature_group.addLayer(json_PedDeaths8JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {'OSM B&W': basemap0};
+        L.control.layers(baseMaps,{'<img src="legend/PedDeaths8.png" /> PedDeaths': json_PedDeaths8JSON,'<img src="legend/PedMajorInjury7.png" /> PedMajorInjury': json_PedMajorInjury7JSON,'<img src="legend/ALLPEDCRASH6.png" /> ALLPEDCRASH': json_ALLPEDCRASH6JSON,'<img src="legend/CouncilDistricts5.png" /> CouncilDistricts': json_CouncilDistricts5JSON,'<img src="legend/Speeding4.png" /> Speeding': json_Speeding4JSON,'<img src="legend/SchoolZone3.png" /> SchoolZone': json_SchoolZone3JSON,'<img src="legend/RunningRedOrStop2.png" /> RunningRedOrStop': json_RunningRedOrStop2JSON,'<img src="legend/ImpairedDriver1.png" /> ImpairedDriver': json_ImpairedDriver1JSON,'<img src="legend/AggressiveDriving0.png" /> AggressiveDriving': json_AggressiveDriving0JSON,},{collapsed:false}).addTo(map);
+        stackLayers();
+        map.on('overlayadd', restackLayers);
+        </script>
+    </body>
+</html>
